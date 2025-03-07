@@ -118,3 +118,37 @@ df_dim_channel = conn.query("""
                 FROM dim_channel
                 """, ttl="10m")
 display_aggrid(df_dim_channel)
+
+
+# Row 2: Fact Tables
+st.subheader("📁 Fact Tables")
+st.write("🔹 **fact_video_performance**")
+# Display the table
+df_fact_video_performance = conn.query("""
+                SELECT 
+                    *
+                FROM fact_video_performance
+                """, ttl="10m")
+display_aggrid(df_fact_video_performance)
+
+
+# Row 3: Mart Tables
+st.subheader("📁 Mart Tables")
+st.write("🔹 **mart_video_daily**")
+# Display the table
+df_mart_video_daily = conn.query("""
+                SELECT 
+                    *
+                FROM mart_video_daily
+                """, ttl="10m")
+display_aggrid(df_mart_video_daily)
+
+st.write("🔹 **mart_video_hourly**")
+# Display the table
+df_mart_video_hourly = conn.query("""
+                SELECT 
+                    *
+                FROM mart_video_hourly
+                """, ttl="10m")
+display_aggrid(df_mart_video_hourly)
+
