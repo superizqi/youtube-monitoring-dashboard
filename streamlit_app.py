@@ -42,6 +42,8 @@ selected_title = st.selectbox("Select a Title", unique_titles)
 
 # Filter Data based on selected Title
 filtered_df = df[df["title"] == selected_title]
+# Ensure the column is datetime format
+filtered_df["data_created_at"] = pd.to_datetime(filtered_df["data_created_at"], errors="coerce")
 
 with st.container():
     col1, col2 = st.columns(2)
