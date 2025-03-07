@@ -3,6 +3,7 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 import plotly.express as px
+from st_aggrid import AgGrid, GridOptionsBuilder
 
 st.title("🎬 YouTube Views Tracker")
 # st.write(
@@ -74,7 +75,7 @@ with st.container():
         )
         st.plotly_chart(fig1, use_container_width=True)
 
-# st.title("📊 YouTube Video Data Warehouse")
+st.title("📊 Youtube Raw Data")
 
 st.data_editor(
     df,
@@ -82,7 +83,9 @@ st.data_editor(
         "title": st.column_config.TextColumn(width="small"),
         "channel_name": st.column_config.TextColumn(width="medium"),
     },
-    hide_index=True
+    hide_index=True,
+    num_rows="fixed",  # Fix the number of rows displayed
+    height=200  # Adjust height to fit 5 rows properly
 )
 
 # Row 1: Dim Tables
@@ -94,4 +97,10 @@ df_dim_video = conn.query("""
 
 st.subheader("📁 Dimension Tables")
 st.write("🔹 **dim_video**")
-st.dataframe(df_dim_video)
+# Configure AgGrid options
+builder = GridOptionsBuilder.from_dataframe(df)
+builder.configure_pagination(enabled=True, paginationPageSize=5)  # Set page size to 5
+builder.configure_side_bar()  # Enable filter options
+
+# Display the table
+AgGrid(df_dim_video, gridOptions=builder.build(), height=300, fit_columns_on_grid_load=True))
