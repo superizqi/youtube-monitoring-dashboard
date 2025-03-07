@@ -27,6 +27,7 @@ df = conn.query("""
                     upload_date,
                     url
                 FROM raw_youtube_data
+                where views_count > 0 and views_count is not null
                 """, ttl="10m")
 
 last_updated = df["data_created_at"].max()
