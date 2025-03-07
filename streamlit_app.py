@@ -98,7 +98,7 @@ df_dim_video = conn.query("""
 st.subheader("📁 Dimension Tables")
 st.write("🔹 **dim_video**")
 # Configure AgGrid options
-builder = GridOptionsBuilder.from_dataframe(df_video)
+builder = GridOptionsBuilder.from_dataframe(df_dim_video)
 builder.configure_pagination(enabled=True, paginationPageSize=5)  # Set page size to 5
 builder.configure_side_bar()  # Enable filter options
 
