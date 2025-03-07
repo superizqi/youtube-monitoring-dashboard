@@ -88,14 +88,7 @@ st.data_editor(
 # Row 1: Dim Tables
 df_dim_video = conn.query("""
                 SELECT 
-                    data_created_at, 
-                    title, 
-                    channel_name, 
-                    views_count, 
-                    likes_count, 
-                    comments_count, 
-                    upload_date,
-                    url
+                    *
                 FROM dim_video
                 """, ttl="10m")
 
