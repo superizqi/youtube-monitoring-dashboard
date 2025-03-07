@@ -103,4 +103,4 @@ builder.configure_pagination(enabled=True, paginationPageSize=5)  # Set page siz
 builder.configure_side_bar()  # Enable filter options
 
 # Display the table
-AgGrid(df_dim_video, gridOptions=builder.build(), height=300, fit_columns_on_grid_load=True)
+AgGrid(df_dim_video, gridOptions=builder.build(), height=200, fit_columns_on_grid_load=True)
