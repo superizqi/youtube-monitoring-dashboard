@@ -26,7 +26,7 @@ df = conn.query("""
                     comments_count, 
                     upload_date,
                     url
-                FROM tb_raw_youtube_data_dup
+                FROM raw_youtube_data
                 where views_count > 0 and views_count is not null
                 """, ttl="10m")
 
