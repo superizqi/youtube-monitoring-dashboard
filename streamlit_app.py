@@ -45,6 +45,21 @@ with st.container():
 
     with col1:
         st.subheader("❤️ Video")
+        idvid = str(df[df["title"] == selected_title]['url'].iloc[0]).split("v=")[1]
+        video_url = f'https://www.youtube.com/embed/{idvid}'
+
+        st.markdown(
+            f"""
+            <iframe width="320" height="180" src="{video_url}" 
+            frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+            </iframe>
+            """,
+            unsafe_allow_html=True
+        )")
+        
+
+    with col2:
+        st.subheader("📊 Views Over Time")
         fig1 = px.line(filtered_df, x="data_created_at", y="views_count",
                     title=f"Views Count Over Time for {selected_title}", height=180)
         
@@ -59,16 +74,31 @@ with st.container():
         )
         st.plotly_chart(fig1, use_container_width=True)
 
-    with col2:
-        st.subheader("📊 Views Over Time")
-        idvid = str(df[df["title"] == selected_title]['url'].iloc[0]).split("v=")[1]
-        video_url = f'https://www.youtube.com/embed/{idvid}'
+# st.title("📊 YouTube Video Data Warehouse")
 
-        st.markdown(
-            f"""
-            <iframe width="320" height="180" src="{video_url}" 
-            frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-            </iframe>
-            """,
-            unsafe_allow_html=True
-        )
+st.data_editor(
+    df,
+    column_config={
+        "title": st.column_config.TextColumn(width="small"),
+        "channel_name": st.column_config.TextColumn(width="medium"),
+    },
+    hide_index=True
+)
+
+# Row 1: Dim Tables
+df_dim_video = conn.query("""
+                SELECT 
+                    data_created_at, 
+                    title, 
+                    channel_name, 
+                    views_count, 
+                    likes_count, 
+                    comments_count, 
+                    upload_date,
+                    url
+                FROM dim_video
+                """, ttl="10m")
+
+st.subheader("📁 Dimension Tables")
+st.write("🔹 **dim_video**")
+st.dataframe(df_dim_video)
