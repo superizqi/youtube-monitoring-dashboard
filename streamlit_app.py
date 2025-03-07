@@ -62,9 +62,14 @@ with st.container():
         
 
     with col2:
-        st.subheader("📊 Views Over Time")
+        st.subheader("📊 Views Tracker Today")
+                # Get today's date
+        today = pd.Timestamp.today().normalize()  # Normalize to remove time part
+
+        # Filter data for today only
+        filtered_today = filtered_df[filtered_df["data_created_at"].dt.date == today.date()]
         fig1 = px.line(filtered_df, x="data_created_at", y="views_count",
-                    title=f"Views Count Over Time for {selected_title}", height=180)
+                    title=f"Views Count Today for {selected_title}", height=180)
         
         # Reduce margins, font sizes, and remove legend to fit small height
         fig1.update_layout(
