@@ -4,4 +4,3 @@ SQLAlchemy
 pandas
 plotly
 streamlit-aggrid
-streamlit-extras

@@ -90,24 +90,31 @@ st.data_editor(
     height=200  # Adjust height to fit 5 rows properly
 )
 
+# 📌 Function to display any DataFrame with pagination
+def display_aggrid(df, height=300, page_size=5):
+    builder = GridOptionsBuilder.from_dataframe(df)
+    builder.configure_pagination(enabled=True, paginationPageSize=page_size)
+    builder.configure_side_bar()  # Enable filtering options
+    grid_options = builder.build()
+
+    AgGrid(df, gridOptions=grid_options, height=height, fit_columns_on_grid_load=True)
+
 # Row 1: Dim Tables
+st.subheader("📁 Dimension Tables")
+st.write("🔹 **dim_video**")
+# Display the table
 df_dim_video = conn.query("""
                 SELECT 
                     *
                 FROM dim_video
                 """, ttl="10m")
-
-st.subheader("📁 Dimension Tables")
-st.write("🔹 **dim_video**")
-# Configure AgGrid options
-builder = GridOptionsBuilder.from_dataframe(df_dim_video)
-builder.configure_pagination(enabled=True, paginationPageSize=5)  # Set page size to 5
-builder.configure_side_bar()  # Enable filter options
-
-# Display the table
-AgGrid(df_dim_video, gridOptions=builder.build(), height=200, fit_columns_on_grid_load=True)
+display_aggrid(df_dim_video)
 
 
 st.write("🔹 **dim_channel**")
-filtered_df = dataframe_explorer(df_dim_channel, case=False)
-st.dataframe(filtered_df)
+df_dim_channel = conn.query("""
+                SELECT 
+                    *
+                FROM dim_channel
+                """, ttl="10m")
+display_aggrid(df_dim_video)
