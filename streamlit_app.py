@@ -77,27 +77,18 @@ with st.container():
         )
         st.plotly_chart(fig1, use_container_width=True)
 
-st.subheader("📊 Youtube Raw Data")
-
-st.data_editor(
-    df,
-    column_config={
-        "title": st.column_config.TextColumn(width="small"),
-        "channel_name": st.column_config.TextColumn(width="medium"),
-    },
-    hide_index=True,
-    num_rows="fixed",  # Fix the number of rows displayed
-    height=200  # Adjust height to fit 5 rows properly
-)
-
 # 📌 Function to display any DataFrame with pagination
-def display_aggrid(df, height=300, page_size=5):
+def display_aggrid(df, height=200, page_size=5):
     builder = GridOptionsBuilder.from_dataframe(df)
     builder.configure_pagination(enabled=True, paginationPageSize=page_size)
     builder.configure_side_bar()  # Enable filtering options
     grid_options = builder.build()
 
     AgGrid(df, gridOptions=grid_options, height=height, fit_columns_on_grid_load=True)
+
+st.subheader("📊 Youtube Raw Data")
+display_aggrid(df)
+
 
 # Row 1: Dim Tables
 st.subheader("📁 Dimension Tables")
