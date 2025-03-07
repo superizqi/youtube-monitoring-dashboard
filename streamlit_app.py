@@ -28,6 +28,7 @@ df = conn.query("""
                     url
                 FROM raw_youtube_data
                 where views_count > 0 and views_count is not null
+                order by 1 asc
                 """, ttl="10m")
 
 last_updated = df["data_created_at"].max()
@@ -45,6 +46,7 @@ selected_title = st.selectbox("Select a Title", unique_titles)
 filtered_df = df[df["title"] == selected_title]
 # Ensure the column is datetime format
 filtered_df["data_created_at"] = pd.to_datetime(filtered_df["data_created_at"], errors="coerce")
+filtered_df.sort_values(by="data_created_at", ascending=False)
 
 with st.container():
     col1, col2 = st.columns(2)
