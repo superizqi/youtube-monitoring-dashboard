@@ -7,7 +7,7 @@ from st_aggrid import AgGrid, GridOptionsBuilder
 from streamlit_extras.dataframe_explorer import dataframe_explorer
 
 
-st.title("🎬 YouTube Views Tracker")
+st.subheader("🎬 YouTube Views Tracker")
 # st.write(
 #     "Let's start building! For help and inspiration, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
 # )
@@ -33,7 +33,7 @@ df = conn.query("""
 last_updated = df["data_created_at"].max()
 
 
-st.markdown(f"""🚀 Curious about how a YouTube video performs? See its view trends, updated every **5 minutes**!  
+st.markdown(f"""🚀 Curious about how a YouTube video performs? See its view trends, updated every **30 minutes**!  
 📅 **Last Updated:** {last_updated}""")
 
 
@@ -65,7 +65,7 @@ with st.container():
         
 
     with col2:
-        st.subheader("📊 Views Tracker Today")
+        st.subheader("📊 Views Tracker")
                 # Get today's date
         today = pd.Timestamp.today().normalize()  # Normalize to remove time part
 
@@ -73,7 +73,7 @@ with st.container():
         filtered_today = filtered_df[filtered_df["data_created_at"].dt.date == today.date()]
         filtered_today = filtered_today.sort_values(by="data_created_at")
         fig1 = px.line(filtered_df, x="data_created_at", y="views_count",
-                    title=f"Views Count Today for {selected_title}", height=180)
+                    title=f"Views Count for {selected_title}", height=180)
         
         # Reduce margins, font sizes, and remove legend to fit small height
         fig1.update_layout(
