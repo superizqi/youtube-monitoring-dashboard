@@ -26,7 +26,7 @@ df = conn.query("""
                     comments_count, 
                     upload_date,
                     url
-                FROM raw_youtube_data
+                FROM tb_raw_youtube_data_dup
                 where views_count > 0 and views_count is not null
                 """, ttl="10m")
 
@@ -71,6 +71,7 @@ with st.container():
 
         # Filter data for today only
         filtered_today = filtered_df[filtered_df["data_created_at"].dt.date == today.date()]
+        filtered_today = filtered_today.sort_values(by="data_created_at")
         fig1 = px.line(filtered_df, x="data_created_at", y="views_count",
                     title=f"Views Count Today for {selected_title}", height=180)
         
