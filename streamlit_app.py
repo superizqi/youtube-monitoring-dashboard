@@ -117,4 +117,4 @@ df_dim_channel = conn.query("""
                     *
                 FROM dim_channel
                 """, ttl="10m")
-display_aggrid(df_dim_video)
+display_aggrid(df_dim_channel)
