@@ -4,6 +4,8 @@ import pandas as pd
 import streamlit as st
 import plotly.express as px
 from st_aggrid import AgGrid, GridOptionsBuilder
+from streamlit_extras.dataframe_explorer import dataframe_explorer
+
 
 st.title("🎬 YouTube Views Tracker")
 # st.write(
@@ -75,7 +77,7 @@ with st.container():
         )
         st.plotly_chart(fig1, use_container_width=True)
 
-st.title("📊 Youtube Raw Data")
+st.subheader("📊 Youtube Raw Data")
 
 st.data_editor(
     df,
@@ -104,3 +106,8 @@ builder.configure_side_bar()  # Enable filter options
 
 # Display the table
 AgGrid(df_dim_video, gridOptions=builder.build(), height=200, fit_columns_on_grid_load=True)
+
+
+st.write("🔹 **dim_channel**")
+filtered_df = dataframe_explorer(df_dim_channel, case=False)
+st.dataframe(filtered_df)
