@@ -75,7 +75,7 @@ with st.container():
         filtered_today = filtered_df[filtered_df["data_created_at"].dt.date == today.date()]
         filtered_today = filtered_today.sort_values(by="data_created_at")
         fig1 = px.line(filtered_df, x="data_created_at", y="views_count",
-                    title=f"Views Count for {selected_title}", height=180)
+                    title=f"Total Views for {selected_title}", height=180)
         
         # Reduce margins, font sizes, and remove legend to fit small height
         fig1.update_layout(
